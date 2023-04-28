@@ -41,4 +41,4 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
             docker stop ttd_frontend || true 
-            docker start --name ttd_frontend -p8080:80 crashkursyildirim.azurecr.io/ttd-frontend:${{ github.run_number }}
+            docker run -d --name ttd_frontend -p8080:80 crashkursyildirim.azurecr.io/ttd-frontend:${{ github.run_number }}
