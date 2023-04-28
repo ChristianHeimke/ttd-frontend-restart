@@ -30,6 +30,7 @@ jobs:
 
   deploy:
     name: deploy new image
+    needs: [docker]
     runs-on: ubuntu-latest
     steps:
         - uses: alex-ac/github-action-ssh-docker-compose@master
