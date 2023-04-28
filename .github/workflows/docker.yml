@@ -33,10 +33,12 @@ jobs:
     needs: [docker]
     runs-on: ubuntu-latest
     steps:
-        - uses: alex-ac/github-action-ssh-docker-compose@master
-          name: Docker-Compose Remote Deployment
-          with:
-            ssh_host: 20.160.229.65
-            ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
-            ssh_user: deploy
-            docker_compose_prefix: ttd_frontend
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@master
+      with:
+        host: 20.160.229.65
+        username: deploy
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+            docker stop ttd_frontend || true 
+            docker start --name ttd_frontend -p8080:80 crashkursyildirim.azurecr.io/ttd-frontend:${{ github.run_number }}
