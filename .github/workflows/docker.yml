@@ -27,3 +27,15 @@ jobs:
           context: .
           push: true
           tags: crashkursyildirim.azurecr.io/ttd-frontend:${{ github.run_number }}
+
+deploy:
+  name: deploy new image
+  runs-on: ubuntu-latest
+  steps:
+      - uses: alex-ac/github-action-ssh-docker-compose@master
+        name: Docker-Compose Remote Deployment
+        with:
+          ssh_host: 20.160.229.65
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh_user: deploy
+          docker_compose_prefix: ttd_frontend
